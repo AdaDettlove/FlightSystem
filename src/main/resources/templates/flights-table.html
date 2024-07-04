@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Flight Search</title>
+    <link href="/styles.css" rel="stylesheet" />
+</head>
+<body class="d-sm-flex flex-sm-column min-vh-100"  >
+<!-- Responsive navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand">AirSearch</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="/flights">Search Flights</a></li>
+                <li class="nav-item"><a class="nav-link" href="/bookingHistory">Booking History</a></li>
+                <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Page header with logo and tagline-->
+<header class="py-5 bg-light border-bottom mb-4">
+    <div class="container">
+        <div class="text-center my-5">
+            <h1 class="fw-bolder">We've found something you might like!</h1>
+            <p class="lead mb-0" th:text="'And the travel begins in ' + ${city}"/>
+        </div>
+    </div>
+</header>
+<!-- Page content-->
+<div class="container">
+            <table class = "table" >
+               <thead> <tr><th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Single ticket</th>
+                   <th>Price total</th>
+                    <th>Available seats</th>
+                   <th></th>
+                </tr>
+               </thead>
+                <tbody>
+                <tr th:object="${flighs}" th:each="flight:${flights}">
+                    <td><span th:text="${flight.getDepartureCity()} " /> <br /><span th:text=" ${flight.getDepartureDate()}" /></td>
+                    <td><span th:text="${flight.getArrivalCity()}" /> <br /><span th:text="${flight.getArrivalDate()}" /></td>
+                    <td><span th:text="${flight.getFlightPrice()} + ' USD'" /></td>
+                    <td><span th:text="${flight.getTotalPrice()} + ' USD'" /></td>
+                    <td><span th:text="${flight.getSeatsAvailable()}" /></td>
+                    <td><form th:action="@{/bookings}">
+                        <input type="hidden" th:value="${passenger}" name="passenger">
+                        <input type="hidden" th:value="${flight.getFlightId()}" name="flightId">
+
+                        <input type="submit" value = "Book" class="btn btn-secondary mb-2"/></form></td>
+                </tr>
+
+                </tbody>
+            </table>
+
+</div>
+<!-- Footer-->
+<footer class="py-5 bg-dark mt-auto">
+</footer>
+</body>
+</html>

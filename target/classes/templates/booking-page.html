@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Flight Search</title>
+    <link href="/styles.css" rel="stylesheet" />
+</head>
+<body class="d-sm-flex flex-sm-column min-vh-100">
+<!-- Responsive navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand">AirSearch</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="/flights">Search Flights</a></li>
+                <li class="nav-item"><a class="nav-link" href="/bookingHistory">Booking History</a></li>
+                <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Page header with logo and tagline-->
+<header class="py-5 bg-light border-bottom mb-4">
+    <div class="container">
+        <div class="text-center my-5">
+            <h1 class="fw-bolder">You're nearly there!</h1>
+        </div>
+    </div>
+</header>
+<!-- Page content-->
+<div class="container">
+
+
+        <div class="mb-3">
+            <h3>Flight info</h3>
+            <table th:object="${flight}" >
+                <thead>
+                <tr><th></th><th></th></tr>
+                </thead>
+
+                <tbody>
+                <tr class="mb-2">
+                    <td>Departure city: </td><td th:text="${flight.getDepartureCity()} " />
+                </tr>
+                <tr class="mb-2">
+                    <td>Departure date: </td><td th:text=" ${flight.getDepartureDate()}" />
+                </tr>
+                <tr class="mb-2">
+                    <td>Arrival city: </td><td th:text="${flight.getArrivalCity()}" />
+                </tr>
+                <tr class="mb-2">
+                    <td>Arrival date: </td> <td th:text="${flight.getArrivalDate()}" />
+                </tr>
+                <tr class="mb-2">
+                    <td>Number of passengers: </td><td th:text="${passenger}" />
+                </tr>
+                <tr class="mb-2">
+                    <td>Price total: </td><td th:text="${flight.getTotalPrice()} + ' USD'" />
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    <h3>Personal details</h3>
+    <form role = "form" class="container" method="post" th:object = "${booking}" th:action="@{/bookings/{passenger}/flights/{flightId}/users/{userId}(passenger=${passenger}, flightId=${flight.getFlightId()}, userId=${userId})}">
+       <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>First name</label>
+                <input type="text" class="form-control" th:field = "*{name}" placeholder="First Name">
+            </div>
+            <div class="form-group col-md-6">
+                <label >Last name</label>
+                <input type="text" class="form-control" th:field="*{surname}" placeholder="Last Name">
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <div class="form-group col-md-6">
+                <label>Email</label>
+                <input type="email" class="form-control" th:field="*{email}" placeholder="email@example.com">
+            </div>
+            <div class="form-group col-md-4">
+                <label>Passport Number</label>
+                <input type="text" class="form-control" th:field="*{passportNumber}" placeholder="XX000000">
+            </div>
+        </div>
+
+
+        <button type="submit" class="btn btn-secondary mb-2">Book now</button>
+    </form>
+
+</div>
+<!-- Footer-->
+<footer class="py-5 bg-dark mt-auto">
+</footer>
+</body>
+</html>
